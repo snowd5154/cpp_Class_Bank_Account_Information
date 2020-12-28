@@ -1,0 +1,536 @@
+#include <iostream>
+
+using namespace std;
+
+class BankAccount //set and retrieve account number, retrieve balance, deposit and withdraw money and print account information
+
+{
+
+public:
+
+int accountNumber;
+
+double Balance;
+
+public:
+
+BankAccount(int Accno,double Bal)
+
+{
+
+accountNumber = Accno;
+
+Balance = Bal;
+
+}
+
+BankAccount()
+
+{
+
+}
+
+public:
+
+double getBal()
+
+{
+
+return(Balance);
+
+}
+
+int getAccNo()
+
+{
+
+return(accountNumber);
+
+}
+
+void setBal(double amount)
+
+{
+
+Balance = amount;
+
+}
+
+void setAccNo(int Accno)
+
+{
+
+accountNumber = Accno;
+
+}
+
+void virtual showAccNo() // to print the details
+
+{
+
+cout << " ---------------------------------" << endl;
+
+cout << " || Account Info " << endl;
+
+cout << " ---------------------------------" << endl;
+
+cout << " || Account Number :" << accountNumber << endl;
+
+cout << " || Account Balance:" << Balance << endl;
+
+cout << " ---------------------------------" << endl;
+
+cout << endl;
+
+}
+
+double virtual depAmnt(double dAmnt)
+
+{
+
+Balance = Balance + dAmnt;
+
+return(Balance);
+
+}
+
+double virtual wdrawAmnt(double wAmnt)
+
+{
+
+Balance = Balance - wAmnt;
+
+return(Balance);
+
+}
+
+};
+
+class CheckingAccount : BankAccount
+
+{
+
+double Intrst;
+
+double minBal;
+
+double serChge;
+
+public:
+
+CheckingAccount(int pAccno,double pAmnt,double pIntrst):BankAccount(pAccno,pAmnt)
+
+{
+
+Intrst = pIntrst;
+
+minBal = 500;//By default
+
+}
+
+void setIntRate(double intRate)
+
+{
+
+Intrst = intRate;
+
+}
+
+double retIntRate()
+
+{
+
+return(Intrst);
+
+}
+
+void setMinBal(double mBal)
+
+{
+
+minBal = mBal;
+
+}
+
+double retMinBal()
+
+{
+
+return(minBal);
+
+}
+
+void setSerChge(double sCharge)
+
+{
+
+serChge = sCharge;
+
+}
+
+double retSerChge()
+
+{
+
+return(serChge);
+
+}
+
+double depAmnt(double dAmnt)
+
+{
+
+Balance = Balance + dAmnt;
+
+return(Balance);
+
+}
+
+double wdrawAmnt(double wAmnt) // fuction to check whether there is sufficent balance is there in account or not and deduct the amount from balance
+
+{
+
+if(wAmnt <= Balance)
+
+Balance = Balance - wAmnt;
+
+else
+
+cout << "You have insufficient funds!" << endl;
+
+return(Balance);
+
+}
+
+void showAccNo()
+
+{
+
+cout << " ---------------------------------" << endl;
+
+cout << " || Account Info " << endl;
+
+cout << " ---------------------------------" << endl;
+
+cout << " || Account Number :" << accountNumber << endl;
+
+cout << " || Account Balance:" << Balance << endl;
+
+cout << " ---------------------------------" << endl;
+
+cout << endl;
+
+}
+
+};
+
+class SavingAccount:BankAccount //set and retrieve interest rate, set and retrieve interest earned, post interest, withdraw, and print account info
+
+{
+
+double minBal;
+
+public:
+
+SavingAccount(int pAccno,double pAmnt):BankAccount(pAccno,pAmnt)
+
+{
+
+minBal = 500;
+
+}
+
+double depAmnt(double dAmnt)
+
+{
+
+Balance = Balance + dAmnt;
+
+return(Balance);
+
+}
+
+double wdrawAmnt(double wAmnt)
+
+{
+
+if(wAmnt <= Balance)
+
+Balance = Balance - wAmnt;
+
+else
+
+cout << "You have in sufficient funds!" << endl;
+
+return(Balance);
+
+}
+
+void setMinBal(double mBal)
+
+{
+
+minBal = mBal;
+
+}
+
+void showAccNo()
+
+{
+
+cout << endl;
+
+cout << " ---------------------------------" << endl;
+
+cout << " || Account Info " << endl;
+
+cout << " ---------------------------------" << endl;
+
+cout << " || Account Number :" << accountNumber << endl;
+
+cout << " || Account Balance:" << Balance << endl;
+
+cout << " ---------------------------------" << endl;
+
+cout << endl;
+
+}
+
+};
+
+int main() // main function
+
+{
+
+double amount;
+
+int choice;
+
+do
+
+{
+
+cout << endl;
+
+cout << " Create an Account " << endl;
+
+cout << " *****************************" << endl;
+
+cout << " ** 1 - Checking Account **" << endl;
+
+cout << " ** 2 - Saving Account **" << endl;
+
+cout << " ** 3 - Exit **" << endl;
+
+cout << " *****************************" << endl;
+
+cin >> choice;
+
+cout << endl;
+
+  
+
+if(choice==1)
+
+{
+
+cout << "Enter account number: " << endl;
+
+int Accno;
+
+cin >> Accno;
+
+cout << "Enter opening balance: " << endl;
+
+double newBal;
+
+cin >> newBal;
+
+double intRate;
+
+cout << "Enter interest rate: " << endl;
+
+cin >> intRate;
+
+CheckingAccount obj(Accno,newBal,intRate);
+
+int accChoice;
+
+do
+
+{
+
+cout << endl;
+
+cout << " *************************" << endl;
+
+cout << " ** 1 - Deposit **" << endl;
+
+cout << " ** 2 - Withdraw **" << endl;
+
+cout << " ** 3 - Account Info **" << endl;
+
+cout << " ** 4 - Exit **" << endl;
+
+cout << " *************************" << endl;
+
+cin >> accChoice;
+
+cout << endl;
+
+switch(accChoice)
+
+{
+
+case 1:
+
+cout << "Enter amount: " << endl;
+
+cin >> amount;
+
+double dAmnt;
+
+dAmnt = obj.depAmnt(amount);
+
+cout << "Available balance: " << dAmnt << endl;
+
+break;
+
+case 2:
+
+cout << "Enter amount: " << endl;
+
+cin >> amount;
+
+double wAmnt;
+
+wAmnt = obj.wdrawAmnt(amount);
+
+cout << "Available balance: "<< wAmnt << endl;
+
+break;
+
+case 3:
+
+obj.showAccNo();
+
+break;
+
+}
+
+}
+
+while(accChoice!=4);
+
+}
+
+else if(choice==2)
+
+{
+
+cout << "Enter account number:" << endl;
+
+int pAccno;
+
+cin >> pAccno;
+
+cout << "Enter opening balance:" << endl;
+
+double pnewBal;
+
+cin >> pnewBal;
+
+double _irate;
+
+cout << "Enter interest rate:" << endl;
+
+cin >> _irate;
+
+SavingAccount sObj(pAccno,pnewBal);
+
+int pChoice;
+
+do
+
+{
+
+cout << endl;
+
+cout << " *************************" << endl;
+
+cout << " ** 1 - Deposit **" << endl;
+
+cout << " ** 2 - Withdraw **" << endl;
+
+cout << " ** 3 - Account Info **" << endl;
+
+cout << " ** 4 - Exit **" << endl;
+
+cout << " *************************" << endl;
+
+cin>>pChoice;
+
+cout << endl;
+
+switch(pChoice)
+
+{
+
+case 1:
+
+cout << "Enter amount:" << endl;
+
+cin >> amount;
+
+double _dAmnt;
+
+_dAmnt = sObj.depAmnt(amount);
+
+cout << "Available balance: " << _dAmnt;
+
+break;
+
+case 2:
+
+cout << "Enter amount:" << endl;
+
+cin >> amount;
+
+double _wamount;
+
+_wamount = sObj.wdrawAmnt(amount);
+
+cout << "Available balance: " << _wamount;
+
+break;
+
+case 3:
+
+sObj.showAccNo();
+
+break;
+
+case 4:
+
+break;
+
+default:
+
+cout << "Invalid choice";
+
+break;
+
+}
+
+}
+
+while(pChoice!=4);
+
+}
+
+}
+
+while(choice!=3);
+
+}
+
